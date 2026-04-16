@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithms to Live By — Visual Demos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 60px 24px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #888; margin-bottom: 48px; font-size: 1rem; }
+    .subtitle a { color: #888; }
+    .chapter-list { list-style: none; }
+    .chapter-list li {
+      border-top: 1px solid #222;
+      padding: 20px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .chapter-list li:last-child { border-bottom: 1px solid #222; }
+    .num { color: #555; font-size: 0.85rem; min-width: 24px; }
+    .info { flex: 1; }
+    .info h2 { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+    .info p { color: #888; font-size: 0.9rem; }
+    a.demo-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 14px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #e8e8e8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: border-color 0.15s;
+    }
+    a.demo-link:hover { border-color: #666; }
+    .badge-soon {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 14px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #555;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Algorithms to Live By</h1>
+    <p class="subtitle">Visual demos for <a href="https://algorithmstoliveby.com" target="_blank">the book</a> by Brian Christian &amp; Tom Griffiths.</p>
+
+    <ul class="chapter-list">
+      <li>
+        <span class="num">01</span>
+        <div class="info">
+          <h2>Optimal Stopping</h2>
+          <p>The 37% rule — when to stop looking and commit to the best option seen so far.</p>
+          <a class="demo-link" href="chapters/01-optimal-stopping/">Open demo →</a>
+        </div>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <div class="info">
+          <h2>Explore / Exploit</h2>
+          <p>Multi-armed bandits and when to try something new vs. stick with what works.</p>
+          <span class="badge-soon">Coming soon</span>
+        </div>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <div class="info">
+          <h2>Sorting</h2>
+          <p>The hidden cost of ordering things — and when not to bother.</p>
+          <span class="badge-soon">Coming soon</span>
+        </div>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <div class="info">
+          <h2>Caching</h2>
+          <p>LRU, eviction policies, and why forgetting is a feature.</p>
+          <span class="badge-soon">Coming soon</span>
+        </div>
+      </li>
+      <li>
+        <span class="num">05</span>
+        <div class="info">
+          <h2>Scheduling</h2>
+          <p>Priority, deadlines, and the math behind getting things done.</p>
+          <span class="badge-soon">Coming soon</span>
+        </div>
+      </li>
+      <li>
+        <span class="num">06</span>
+        <div class="info">
+          <h2>Bayes's Rule</h2>
+          <p>Updating beliefs with evidence — the engine of rational reasoning.</p>
+          <span class="badge-soon">Coming soon</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
