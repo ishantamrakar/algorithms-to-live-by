@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimal Stopping</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <div class="back"><a href="../../index.html">← Algorithms to Live By</a></div>
+
+    <header>
+      <div class="chapter-num">Chapter 1</div>
+      <h1>Optimal Stopping</h1>
+      <p class="tagline">
+        You have $n$ options arriving in sequence. You cannot go back.
+        How long should you look before you leap?
+      </p>
+    </header>
+
+    <!-- SIMULATOR SECTION (moved above math) -->
+    <section class="sim-section">
+      <h2 class="section-heading">Simulator</h2>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="slider-n">
+            Number of options <span class="label-val" id="val-n">1000</span>
+          </label>
+          <input type="range" id="slider-n" min="5" max="1000" value="1000" step="5">
+        </div>
+        <div class="control-group">
+          <label for="slider-r">
+            Look phase <span class="label-val" id="val-r">37</span>%
+          </label>
+          <input type="range" id="slider-r" min="1" max="99" value="37" step="1">
+        </div>
+        <div class="control-row">
+          <div class="control-group inline">
+            <label for="slider-sims">
+              Simulations <span class="label-val" id="val-sims">500</span>
+            </label>
+            <input type="range" id="slider-sims" min="100" max="2000" value="500" step="100">
+          </div>
+          <button id="btn-run">Run Monte Carlo</button>
+        </div>
+      </div>
+
+      <div class="chart-section">
+        <div class="chart-header">
+          <span class="chart-title">Probability of finding the best option</span>
+          <div class="legend">
+            <span class="legend-item"><span class="dot theory"></span>Theoretical</span>
+            <span class="legend-item"><span class="dot monte"></span>Monte Carlo</span>
+            <span class="legend-item"><span class="dot cursor"></span>Your threshold</span>
+          </div>
+        </div>
+        <canvas id="chart" width="800" height="400"></canvas>
+        <div class="chart-footer">Look phase (%)</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card" id="card-theory">
+          <div class="stat-label">Theoretical peak</div>
+          <div class="stat-value">36.8%</div>
+          <div class="stat-sub">at 37% look phase, for any large n</div>
+        </div>
+        <div class="stat-card" id="card-your">
+          <div class="stat-label">Your threshold</div>
+          <div class="stat-value" id="your-prob">--</div>
+          <div class="stat-sub" id="your-sub">move the look phase slider</div>
+        </div>
+        <div class="stat-card" id="card-monte">
+          <div class="stat-label">Monte Carlo result</div>
+          <div class="stat-value" id="monte-prob">--</div>
+          <div class="stat-sub" id="monte-sub">click Run Monte Carlo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MATH SECTION -->
+    <section class="math-section">
+      <h2 class="section-heading">The Math</h2>
+
+      <div class="math-block">
+
+        <div class="math-step">
+          <div class="math-step-label">Strategy</div>
+          <div class="math-step-body">
+            Look at the first $r$ options without choosing. Then pick the
+            next option that beats the best seen so far. Never go back.
+          </div>
+        </div>
+
+        <div class="math-step">
+          <div class="math-step-label">Breaking it into cases</div>
+          <div class="math-step-body">
+            <p>The best candidate sits at some position $k$. To succeed, two things must happen simultaneously — so we multiply their probabilities:</p>
+            <ul class="math-list">
+              <li>
+                <strong>The best is not in the look phase:</strong> $k > r$, so you don't skip them.
+                Since the best is equally likely to be anywhere,
+                $$P(\text{best at position } k) = \frac{1}{n}$$
+              </li>
+              <li>
+                <strong>No false leap before position $k$:</strong> nobody between positions $r{+}1$ and $k{-}1$
+                triggers your rule. This only fails if some runner-up appears before position $k$ but after position $r$.
+                That runner-up is safe only if the second-best among the first $k{-}1$ candidates fell inside your look phase.
+                There are $r$ safe slots out of $k{-}1$ total, so
+                $$P(\text{no false leap}) = \frac{r}{k-1}$$
+              </li>
+            </ul>
+            <p>Both must hold at the same time, and they are independent, so multiply:</p>
+            $$P(\text{success} \mid \text{best at } k) \cdot P(\text{best at } k) = \frac{1}{n} \cdot \frac{r}{k-1}$$
+          </div>
+        </div>
+
+        <div class="math-step">
+          <div class="math-step-label">Total probability</div>
+          <div class="math-step-body">
+            Sum over every position where success is possible ($k = r{+}1$ to $n$).
+            Cases $k \leq r$ contribute zero because you skip the best during the look phase.
+            $$P(r,\, n) \;=\; \sum_{k=r+1}^{n} \frac{1}{n} \cdot \frac{r}{k-1} \;=\; \frac{r}{n} \sum_{k=r+1}^{n} \frac{1}{k-1}$$
+          </div>
+        </div>
+
+        <div class="math-step">
+          <div class="math-step-label">Continuous approximation</div>
+          <div class="math-step-body">
+            Let $x = r/n$ be the look fraction. As $n \to \infty$ the sum becomes an integral:
+            $$\frac{r}{n}\sum_{k=r+1}^{n}\frac{1}{k-1} \;\longrightarrow\; x\int_{x}^{1}\frac{1}{t}\,dt \;=\; -x\ln x$$
+            So the continuous approximation is simply
+            $$P(x) = -x \ln x$$
+          </div>
+        </div>
+
+        <div class="math-step">
+          <div class="math-step-label">Finding the optimum</div>
+          <div class="math-step-body">
+            Differentiate and set to zero:
+            $$\frac{dP}{dx} = -\ln x - 1 = 0 \;\implies\; x = \frac{1}{e} \approx 0.368$$
+            Look at the first $1/e \approx 37\%$ of options, then leap at the next best.
+            The maximum probability of success also converges to
+            $$P\!\left(\tfrac{1}{e}\right) = -\frac{1}{e}\ln\frac{1}{e} = \frac{1}{e} \approx 36.8\%$$
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Math charts: P(x) and dP/dx side by side -->
+      <div class="math-charts">
+        <div class="math-chart-wrap">
+          <div class="math-chart-title">$P(x) = -x \ln x$</div>
+          <canvas id="chart-px" width="360" height="220"></canvas>
+          <div class="math-chart-foot">$x$ = look fraction</div>
+        </div>
+        <div class="math-chart-wrap">
+          <div class="math-chart-title">$\dfrac{dP}{dx} = -\ln x - 1$</div>
+          <canvas id="chart-dpx" width="360" height="220"></canvas>
+          <div class="math-chart-foot">zero crossing at $x = 1/e$</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
