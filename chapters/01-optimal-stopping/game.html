@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Secretary Problem — Optimal Stopping</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <div class="container">
+
+    <div class="back"><a href="index.html">← Optimal Stopping</a></div>
+
+    <header>
+      <div class="chapter-num">Chapter 1 — Interactive Demo</div>
+      <h1>The Secretary Problem</h1>
+      <p class="tagline">
+        You're hiring. Candidates interview one at a time — once you pass, they're gone.
+        Find the best one.
+      </p>
+    </header>
+
+    <!-- SETUP -->
+    <div id="screen-setup">
+      <div class="setup-card">
+        <div class="setup-row">
+          <label for="setup-n">How many candidates?</label>
+          <div class="setup-control">
+            <input type="range" id="setup-n" min="5" max="30" value="20" step="1">
+            <span class="label-val" id="setup-n-val">20</span>
+          </div>
+        </div>
+        <div class="setup-hint">
+          Tip: the 37% rule says observe the first <strong id="setup-look">7</strong> candidates
+          without hiring, then hire the next one better than all of them.
+        </div>
+        <button id="btn-start" class="btn-primary">Start Interviewing</button>
+      </div>
+    </div>
+
+    <!-- INTERVIEW -->
+    <div id="screen-game" class="hidden">
+
+      <div class="progress-wrap">
+        <div class="progress-bar-bg">
+          <div id="progress-bar" class="progress-bar-fill"></div>
+          <div id="progress-threshold" class="progress-threshold"></div>
+        </div>
+        <div class="progress-labels">
+          <span id="progress-label">Candidate <strong>1</strong> of <strong id="prog-total">20</strong></span>
+          <span id="phase-label" class="phase-look">Look phase</span>
+        </div>
+      </div>
+
+      <div class="candidate-card">
+        <div class="candidate-num" id="candidate-num">Candidate #1</div>
+        <div class="candidate-score-wrap">
+          <div class="candidate-score" id="candidate-score">72</div>
+          <div class="candidate-score-label">interview score</div>
+        </div>
+        <div class="candidate-bar-wrap">
+          <div class="candidate-bar" id="candidate-bar"></div>
+        </div>
+        <div class="candidate-context" id="candidate-context"></div>
+      </div>
+
+      <div class="game-actions">
+        <button id="btn-pass" class="btn-pass">Pass</button>
+        <button id="btn-hire" class="btn-hire">Hire</button>
+      </div>
+
+      <div class="best-seen-wrap">
+        <span class="best-seen-label">Best seen so far</span>
+        <span class="best-seen-val" id="best-seen-val">—</span>
+      </div>
+
+    </div>
+
+    <!-- RESULT -->
+    <div id="screen-result" class="hidden">
+
+      <div class="result-hero">
+        <div class="result-rank-wrap">
+          <div class="result-rank-label">Your hire ranked</div>
+          <div class="result-rank" id="result-rank">#3</div>
+          <div class="result-rank-sub" id="result-rank-sub">out of 20</div>
+        </div>
+        <div class="result-verdict" id="result-verdict"></div>
+      </div>
+
+      <div class="result-compare">
+        <div class="result-card">
+          <div class="result-card-label">You hired</div>
+          <div class="result-card-score" id="res-your-score"></div>
+        </div>
+        <div class="result-card highlight">
+          <div class="result-card-label">Best candidate</div>
+          <div class="result-card-score" id="res-best-score"></div>
+        </div>
+        <div class="result-card">
+          <div class="result-card-label">37% rule would hire</div>
+          <div class="result-card-score" id="res-opt-score"></div>
+        </div>
+      </div>
+
+      <div class="result-timeline-wrap">
+        <div class="result-timeline-label">All candidates in interview order</div>
+        <div id="result-timeline"></div>
+        <div class="timeline-legend">
+          <span><span class="tl-swatch" style="background:#111;"></span>Your hire</span>
+          <span><span class="tl-swatch" style="background:#16a34a;"></span>Best candidate</span>
+          <span><span class="tl-swatch" style="background:#f59e0b;"></span>37% pick</span>
+        </div>
+      </div>
+
+      <div class="score-wrap">
+        <div class="score-label">Session stats</div>
+        <div class="score-val" id="score-val">—</div>
+        <div class="score-sub" id="score-sub"></div>
+      </div>
+
+      <div class="result-actions">
+        <button id="btn-replay" class="btn-primary">Play again</button>
+        <button id="btn-change" class="btn-secondary">Change settings</button>
+      </div>
+
+    </div>
+
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
