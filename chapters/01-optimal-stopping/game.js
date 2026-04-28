@@ -146,17 +146,17 @@ function renderCandidate() {
 
   // Context message
   if (i === 0) {
-    candidateContext.textContent = 'First candidate — no benchmark yet.';
+    candidateContext.textContent = 'No benchmark yet.';
   } else if (inLook) {
     const better = score > state.bestSeen;
     candidateContext.textContent = better
-      ? `Best so far in the look phase.`
-      : `Not the best seen yet — best is ${state.bestSeen}.`;
+      ? `Look phase best so far.`
+      : `Look phase — best seen is ${state.bestSeen}.`;
   } else {
     const beats = score > state.bestSeen;
     candidateContext.textContent = beats
-      ? `Beats your look phase benchmark of ${state.bestSeen}. You can hire now.`
-      : `Does not beat your benchmark of ${state.bestSeen}.`;
+      ? `Beats benchmark (${state.bestSeen}).`
+      : `Below benchmark (${state.bestSeen}).`;
   }
 
   // Best seen
@@ -207,10 +207,10 @@ function finish(score) {
   resultRank.className = 'result-rank ' + rankClass;
 
   const verdicts = {
-    'rank-great': `You found one of the best candidates. The 37% rule works.`,
-    'rank-good':  `A solid hire — top quarter of the pool.`,
-    'rank-okay':  `Decent, but better candidates were available.`,
-    'rank-poor':  `You missed the best ones. Try letting the look phase guide you.`,
+    'rank-great': rank === 1 ? `The best candidate. The rule paid off.` : `Near the top. Good enough in practice.`,
+    'rank-good':  `Top quartile. Not optimal, but not bad.`,
+    'rank-okay':  `Middle of the pool. Better candidates passed through.`,
+    'rank-poor':  `Bottom half. The look phase benchmark wasn't enough here.`,
   };
   resultVerdict.textContent = verdicts[rankClass];
 
@@ -226,11 +226,11 @@ function finish(score) {
   const bestHit = state.roundResults.filter(r => r.rank === 1).length;
   const top25   = state.roundResults.filter(r => r.rank <= Math.ceil(r.n * 0.25)).length;
   scoreVal.textContent = rounds === 1
-    ? (rank === 1 ? 'Got the best!' : `Rank #${rank}`)
-    : `${bestHit} / ${rounds} rounds: hired the best candidate`;
+    ? `Rank #${rank} of ${n}`
+    : `${bestHit} / ${rounds} best`;
   scoreSub.textContent = rounds > 1
-    ? `Top 25% in ${top25} of ${rounds} rounds. The 37% rule succeeds ~37% of the time.`
-    : `Play more rounds to see your hit rate converge toward 37%.`;
+    ? `top 25% in ${top25} of ${rounds} rounds — rule hits ~37% over many trials`
+    : `run more rounds to see the hit rate settle`;
 
   hide(screenGame);
   show(screenResult);

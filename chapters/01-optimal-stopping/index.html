@@ -25,13 +25,13 @@
       <div class="chapter-num">Chapter 1</div>
       <h1>Optimal Stopping</h1>
       <p class="tagline">
-        You're interviewing candidates one at a time. Each one you pass is gone for good. How do you know when to stop looking and commit? When you can rank candidates against each other and you know how many there are, the answer is the <strong>37% rule</strong>: spend the first 37% of candidates just observing, building a benchmark — then hire the next person who beats everyone you've seen so far.
+        Options arrive one at a time and you can't go back. If you know how many there are and can rank them, the optimal strategy is the <strong>37% rule</strong>: spend the first 37% just looking, build a benchmark, then take the next option that beats it.
       </p>
     </header>
 
     <!-- INTERACTIVE DEMO -->
     <section class="sim-section">
-      <h2 class="section-heading">The Secretary Problem — Try It</h2>
+      <h2 class="section-heading">The Secretary Problem</h2>
 
       <!-- SETUP -->
       <div id="screen-setup">
@@ -44,9 +44,9 @@
             </div>
           </div>
           <div class="setup-hint">
-            <strong>37% rule:</strong> use the first <strong id="setup-look">7</strong> candidates as your look phase — pass on all of them, no matter how good. Then hire the next candidate who beats your best from that phase.
+            <strong>37% rule:</strong> pass on the first <strong id="setup-look">7</strong> candidates regardless — they're your look phase. Hire the next one who beats the best you saw.
           </div>
-          <button id="btn-start" class="btn-primary">Start Interviewing</button>
+          <button id="btn-start" class="btn-primary">Start</button>
         </div>
       </div>
 
@@ -129,8 +129,8 @@
         </div>
 
         <div class="result-actions">
-          <button id="btn-replay" class="btn-primary">Play again</button>
-          <button id="btn-change" class="btn-secondary">Change settings</button>
+          <button id="btn-replay" class="btn-primary">Again</button>
+          <button id="btn-change" class="btn-secondary">Change n</button>
         </div>
       </div>
     </section>
@@ -180,17 +180,17 @@
         <div class="stat-card" id="card-theory">
           <div class="stat-label">Theoretical peak</div>
           <div class="stat-value">36.8%</div>
-          <div class="stat-sub">at 37% look phase, for any large n</div>
+          <div class="stat-sub">$1/e$, holds for any large $n$</div>
         </div>
         <div class="stat-card" id="card-your">
-          <div class="stat-label">Your threshold</div>
+          <div class="stat-label">Your look phase</div>
           <div class="stat-value" id="your-prob">--</div>
-          <div class="stat-sub" id="your-sub">move the look phase slider</div>
+          <div class="stat-sub" id="your-sub">adjust the look phase slider</div>
         </div>
         <div class="stat-card" id="card-monte">
-          <div class="stat-label">Monte Carlo result</div>
+          <div class="stat-label">Simulated</div>
           <div class="stat-value" id="monte-prob">--</div>
-          <div class="stat-sub" id="monte-sub">click Run Monte Carlo</div>
+          <div class="stat-sub" id="monte-sub">run Monte Carlo first</div>
         </div>
       </div>
     </section>
